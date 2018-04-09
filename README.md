@@ -34,7 +34,7 @@ If successful, the created user object will be returned, status code will be 200
     	"numbOfNotificationsPush": 0
 }
 ```
-If the user already exists you will see, status code will be 401:
+If the user already exists you will see, status code will be 400:
 
 ```
 {
