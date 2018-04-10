@@ -24,7 +24,7 @@ public class NotificationController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping(value="/{username}", method=RequestMethod.POST)
 	public NotificationDTO sendNotification(@PathVariable String username, @RequestBody NotificationDTO notification) throws UserNotFoundException, PushBulletException, ValidationFailureException {
 		

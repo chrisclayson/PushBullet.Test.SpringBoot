@@ -38,7 +38,7 @@ public class PushBulletService {
 	}
 
 	/**
-	 * Sends a push "note" request to PushBullet and returns the push identify
+	 * Sends a push "note" request to PushBullet synchronously and returns the push identify.
 	 * 
 	 * @param user 
 	 * @param notification

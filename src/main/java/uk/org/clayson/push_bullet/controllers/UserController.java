@@ -26,9 +26,8 @@ public class UserController {
 	@RequestMapping(method=RequestMethod.POST)
 	public @ResponseBody UserDTO register(@RequestBody UserDTO user) throws ValidationFailureException {
 		
-		if ( user.getUsername() == null || user.getUsername().isEmpty()) throw new ValidationFailureException("Username is required");
-		if ( user.getAccessToken() == null || user.getAccessToken().isEmpty()) throw new ValidationFailureException("Access Token is required");
-		if ( userService.userExists(user.getUsername()) ) throw new ValidationFailureException(String.format("User %s already exists", user.getUsername())); 	
+		if ( user.getUsername() == null || user.getUsername().trim().isEmpty()) throw new ValidationFailureException("Username is required");
+		if ( user.getAccessToken() == null || user.getAccessToken().trim().isEmpty()) throw new ValidationFailureException("Access Token is required");
 		ModelMapper mapper = new ModelMapper();
 		User userEntity = mapper.map(user, User.class);
 		userEntity = userService.createUser(userEntity);

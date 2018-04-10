@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import uk.org.clayson.push_bullet.exception.ValidationFailureException;
 import uk.org.clayson.push_bullet.model.entity.User;
 import uk.org.clayson.push_bullet.model.repository.UserRepository;
 
@@ -29,7 +30,8 @@ public class UserService {
 		return repository.findAll();
 	}
 	
-	public synchronized User createUser(User user) {
+	public synchronized User createUser(User user) throws ValidationFailureException {
+		if ( this.userExists(user.getUsername()) ) throw new ValidationFailureException(String.format("User %s already exists", user.getUsername())); 	
 		
 		user.setCreateTime(LocalDateTime.now());
 		user.setNumOfNotificationsPushed(0);
@@ -48,10 +50,17 @@ public class UserService {
 			long count = u.getNumOfNotificationsPushed() + 1;
 			log.info(String.format("User %s count incremented to %d", username, count));
 			u.setNumOfNotificationsPushed(count);
-			
 			return repository.save(u);
 		}
 		return null;
+	}
+	
+	public void Clear() {
+		repository.deleteAll();
+	}
+	
+	public long Count() {
+		return repository.count();
 	}
 	
 }
